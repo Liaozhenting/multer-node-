@@ -45,7 +45,7 @@ let upload = multer({ storage: storage })
 router.post('/', upload.single('avatar'), function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.send({
-        code: 1, message: 'successs'
+        code: 0, message: 'successs'
     })
 })
 ```
