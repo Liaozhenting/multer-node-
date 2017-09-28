@@ -41,11 +41,31 @@ let storage = multer.diskStorage({
 
 
 let upload = multer({ storage: storage })
-
+//单文件上传
 router.post('/', upload.single('avatar'), function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.send({
-        code: 0, message: 'successs'
+        code: 1, message: 'successs'
     })
 })
+//多文件上传，配置信息是跟单个是一样的，只是到逻辑这里不一样。
+router.post('/solutionPic', upload.array('avatar'), function (req, res) {
+    res.header('Access-Control-Allow-Origin', '*');
+    try{
+        let files = req.files;
+        //记录图片地址数组
+        let arr = [];
+        for(let i= 0;i<files.length;i++){
+            arr.push('/upload/solution/'+files[i].filename);
+        }
+        res.send({
+            code: 0, message: 'successs', data: arr   
+        });
+    }catch(e){
+        console.log(e)
+        red.send({
+            code:9,message:e
+        })
+    }
+});
 ```
